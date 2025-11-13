@@ -29,6 +29,21 @@ export default class EmpleadosService {
         });
     }
 
+    getSubordinados() {
+        var request = "api/empleados/subordinados";
+        var url = Global.apiEmpleados + request;
+
+        return new Promise(function (resolve) {
+            axios.get(url, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("auth_token")
+                }
+            }).then((response) => {
+                resolve(response);
+            });
+        });
+    }
+
     saveToken(token) {
         localStorage.setItem("auth_token", token);
     }

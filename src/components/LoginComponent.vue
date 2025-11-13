@@ -34,13 +34,9 @@ export default {
   methods: {
     tryLogin() {
       service.login(this.tryUser).then((response) => {
-        if (response.status == 200) {
-          console.log("Autenticación correcta. Redirigiendo a perfil...");
-          service.saveToken(response.data.response);
-          this.$router.push('/profile');
-        } else {
-          alert("Username o password incorrectos.");
-        }
+        console.log("Autenticación correcta. Redirigiendo a perfil...");
+        service.saveToken(response.data.response);
+        this.$router.push('/profile');
       })
     }
   }
