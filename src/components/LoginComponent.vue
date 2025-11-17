@@ -34,10 +34,19 @@ export default {
   methods: {
     tryLogin() {
       service.login(this.tryUser).then((response) => {
-        console.log("Autenticación correcta. Redirigiendo a perfil...");
-        service.saveToken(response.data.response);
-        this.$router.push('/profile');
-      })
+        const token = response && response.data && response.data.response;
+        if (token) {
+          console.log("Autenticación correcta. Redirigiendo a perfil...");
+          service.saveToken(token);
+          this.$router.push('/profile');
+        } else {
+          console.error("Token no recibido en la respuesta de login", response);
+          alert("Error de autenticación: no se recibió token. Inténtalo de nuevo.");
+        }
+      }).catch((error) => {
+        console.error("Error en login:", error);
+        alert("Error de autenticación: usuario o contraseña incorrectos.");
+      });
     }
   }
 }
